@@ -1,0 +1,29 @@
+HAMBA EVIDENCE TIMESTAMP ROOT
+Date (UTC): 2026-11-10T14:23:39Z
+Repository: supermaxlol/hamba (private)
+Commit: 36382978a160fc56a3960d91c37284c7b3fb004e
+
+This file commits to the state of the Hamba workspace as of the date above.
+
+MANIFEST.sha256
+  sha256: 0a431e871b3abb7d63bf266361759049821acd3c8bf9bc57856a2a4cad32c4f6
+  entries: 2635  (regular files hashed with SHA-256; symlinks recorded by target path)
+
+KEY_ARTEFACTS.sha256
+  sha256: 76b50861d0a305809f0f31a94b3f4ed45c7744953521125932b4bfbe65eca131
+  entries: 14  (documents named in i2i Schedule A Appendix A and the agreement bundle)
+
+Verification
+  1. Recompute:  shasum -a 256 MANIFEST.sha256   (must equal manifest sha256 above)
+  2. Recompute:  shasum -a 256 KEY_ARTEFACTS.sha256
+  3. Verify the RFC 3161 token against this file:
+       openssl ts -verify -in ROOT.txt.tsr -queryfile ROOT.txt.tsq \
+         -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt -data ROOT.txt
+  4. To verify any individual file, recompute its SHA-256 and match the line in MANIFEST.sha256
+     (or KEY_ARTEFACTS.sha256 for the named documents). Publishing this root does not publish
+     filenames or contents; the manifest may be revealed later to prove any specific file.
+
+Scope
+  The manifest covers the committed tree at the commit above, excluding the TIMESTAMP/
+  directory itself. External materials not in that tree are recorded separately in
+  EXTERNAL_FAOSTAT.sha256 and Linked_External_Sources/EXTERNAL_SOURCES.md.
