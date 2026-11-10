@@ -16,36 +16,40 @@ It does not contain the work. It contains cryptographic commitments to the work 
 
 The full `MANIFEST.sha256` (all filenames and hashes) is not published here. Publishing `ROOT.txt` commits to it without disclosing the file tree. To prove any specific file later, I can reveal the manifest and anyone can recompute its hash to match the value recorded in `ROOT.txt`, then locate the file's hash inside it.
 
+## Timestamp sets
+
+| Set | Root | Key artefacts | Commit (private `supermaxlol/hamba`) | Certified (UTC) |
+|---|---|---|---|---|
+| Initial | `ROOT.txt` | `KEY_ARTEFACTS.sha256` (14) | `36382978a160fc56a3960d91c37284c7b3fb004e` | 2026-11-10 14:23:49 |
+| Supplemental | `ROOT_77ac227.txt` | `KEY_ARTEFACTS_77ac227.sha256` (22) | `77ac2273b94df54dfe6f049531011a5d879b9f03` | 2026-11-10 14:43:47 |
+
+The supplemental set adds the pre-acceptance design-space alternatives, positioning/manifesto statements, supplemental disclosure PDFs, updated cover email/checklist, and the Phase II contribution log (manifest: 2,645 entries). The initial set remains valid and unchanged.
+
 ## Verify
 
 Requirements: `openssl` (3.x recommended) and `shasum` (macOS) or `sha256sum`.
 
 ```bash
-# 1. Verify the FreeTSA timestamp on the root commitment
-openssl ts -verify \
-  -data ROOT.txt \
-  -in ROOT.txt.tsr \
-  -CAfile freetsa-cacert.pem \
-  -untrusted freetsa-tsa.crt
+# Initial set (2026-11-10 14:23:49 UTC)
+openssl ts -verify -data ROOT.txt -in ROOT.txt.tsr -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt
+openssl ts -verify -data KEY_ARTEFACTS.sha256 -in KEY_ARTEFACTS.sha256.tsr -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt
 
-# 2. Verify the FreeTSA timestamp on the key-artefacts list
-openssl ts -verify \
-  -data KEY_ARTEFACTS.sha256 \
-  -in KEY_ARTEFACTS.sha256.tsr \
-  -CAfile freetsa-cacert.pem \
-  -untrusted freetsa-tsa.crt
+# Supplemental set (2026-11-10 14:43:47 UTC)
+openssl ts -verify -data ROOT_77ac227.txt -in ROOT_77ac227.txt.tsr -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt
+openssl ts -verify -data KEY_ARTEFACTS_77ac227.sha256 -in KEY_ARTEFACTS_77ac227.sha256.tsr -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt
 
-# 3. Inspect the certified time
+# Inspect certified times
 openssl ts -reply -in ROOT.txt.tsr -text | grep -E "Status|Time stamp"
+openssl ts -reply -in ROOT_77ac227.txt.tsr -text | grep -E "Status|Time stamp"
 ```
 
-Expected: `Verification: OK` for both commands, and `Time stamp: Nov 10 14:23:49 2026 GMT`.
+Or run `bash verify.sh` to verify both sets.
 
-To verify a key artefact against this record: compute its SHA-256 and confirm the value appears in `KEY_ARTEFACTS.sha256`.
+To verify a key artefact against a record: compute its SHA-256 and confirm the value appears in the corresponding `KEY_ARTEFACTS*.sha256`.
 
 ```bash
 shasum -a 256 /path/to/HAMBA_Consolidated_Business_Plan_v2.3.md
-grep HAMBA_Consolidated_Business_Plan_v2.3.md KEY_ARTEFACTS.sha256
+grep HAMBA_Consolidated_Business_Plan_v2.3.md KEY_ARTEFACTS_77ac227.sha256
 ```
 
 ## What this proves, and what it does not

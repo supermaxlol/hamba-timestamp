@@ -1,0 +1,33 @@
+HAMBA EVIDENCE TIMESTAMP ROOT (supplemental)
+Date (UTC): 2026-11-10T14:43:37Z
+Repository: supermaxlol/hamba (private)
+Commit: 77ac2273b94df54dfe6f049531011a5d879b9f03
+Supersedes (prior certified state): 36382978a160fc56a3960d91c37284c7b3fb004e (ROOT.txt, FreeTSA 2026-11-10T14:23:49Z)
+
+This file commits to the state of the Hamba workspace as of the date above, including
+supplemental pre-acceptance disclosures added after the prior timestamp (design-space
+alternatives, positioning/manifesto statements, supplemental PDFs, cover-email updates,
+and Phase II contribution log).
+
+MANIFEST_77ac227.sha256
+  sha256: 73ad6bf58dc418e7e726274cb5ef6e3072c7ce37636becb85d29b5ea09b50938
+  entries: 2645  (regular files hashed with SHA-256; symlinks recorded by target path)
+
+KEY_ARTEFACTS_77ac227.sha256
+  sha256: 0b970d08937fd9b9b339149903751081055b22b997f2672b03cbc6c15e730994
+  entries: 22  (key pre-existing/background and supplemental disclosure documents)
+
+Verification
+  1. Recompute:  shasum -a 256 MANIFEST_77ac227.sha256
+  2. Recompute:  shasum -a 256 KEY_ARTEFACTS_77ac227.sha256
+  3. Verify RFC 3161 token for this root:
+       openssl ts -verify -data ROOT_77ac227.txt -in ROOT_77ac227.txt.tsr \
+         -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt
+  4. Verify RFC 3161 token for key artefacts:
+       openssl ts -verify -data KEY_ARTEFACTS_77ac227.sha256 -in KEY_ARTEFACTS_77ac227.sha256.tsr \
+         -CAfile freetsa-cacert.pem -untrusted freetsa-tsa.crt
+
+Scope
+  The manifest covers the committed tree at the commit above, excluding the TIMESTAMP/
+  directory itself. External materials not in that tree are recorded in
+  EXTERNAL_FAOSTAT.sha256 and Linked_External_Sources/EXTERNAL_SOURCES.md.
